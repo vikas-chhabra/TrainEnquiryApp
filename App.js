@@ -50,19 +50,19 @@ const AppTopTabNavigator = createMaterialTopTabNavigator({
     header:<Header backgroundColor="0E6BA8" style={{backgroundColor:'#0E6BA8'}}>
     <StatusBar backgroundColor="#0E6BA8"/>
     <Left>
-      <Button transparent>
-        <Ionicons name='md-train' size={32} color="#fff"/>
+      <Button transparent onPress={(e)=>{navigation.toggleDrawer()}}>
+        <Icon name='menu'  color="#fff"/>
       </Button>
     </Left>
     <Body>
       <Title style={{color:'#fff'}}>Train Enquiry</Title>
     </Body>
     <Right>
-      <Button transparent onPress={(e)=>{Alert.alert("Thank You for loving Us!!")}}>
+      <Button transparent onPress={(e)=>{Alert.alert("Thank You for loving Us!!","We are greatful")}}>
         <Icon name='heart' style={{color:'#fff'}}/>
       </Button>
-      <Button transparent onPress={(e)=>{navigation.toggleDrawer()}}>
-        <Icon name='menu' style={{color:'#fff'}}/>
+      <Button transparent >
+        <Ionicons name='md-train' size={32} style={{color:'#fff'}}/>
       </Button>
     </Right>
   </Header>,
@@ -81,7 +81,7 @@ const AppStackNavigator = createStackNavigator({
 const AppDrawerNavigator = createDrawerNavigator({
   Home:AppStackNavigator
 },{
-  drawerPosition:'right',
+  drawerPosition:'left',
   drawerType:'slide'
 })
 

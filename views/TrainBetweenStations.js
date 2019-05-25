@@ -42,17 +42,15 @@ class TrainBetweenStations extends Component {
         }
         else {
             this.toggleActivity();
-            let res = Helper(this.state.getTrainBetweenStationsUrl + apiKey + '/From/' + this.state.sourceStationCode + '/to/' + this.state.destinationStationCode);
+            let res = Helper(this.state.getTrainBetweenStationsUrl + apiKey + '/From/' + this.state.sourceStationCode.toUpperCase() + '/to/' + this.state.destinationStationCode.toUpperCase());
             res.then((
                 res => {
-                    console.log('res is ', res)
                     this.toggleActivity();
                     if (res.ResponseCode === '200') {
                         this.setState({
                             trainBetweenStationsResponse: res,
                             trainBetweenStationsResponsefetched: true
                         })
-
                     }
                     else {
                         Alert.alert(res.Message)
@@ -77,17 +75,6 @@ class TrainBetweenStations extends Component {
                         />
                     }
                 >
-
-                    {
-                        this.state.showActivity ? (
-                            <View style={[styles.container, styles.horizontal]}>
-                                <ActivityIndicator size="large" color="#0E6BA8" />
-                            </View>
-                        ) :
-                            (
-                                <View />
-                            )
-                    }
                     <View style={{ paddingLeft: 10 }}>
                         <Title>
                             Please enter Your details:
@@ -97,14 +84,14 @@ class TrainBetweenStations extends Component {
                         <TextInput
                             label='Sorce Station Code'
                             value={this.state.sourceStationCode}
-                            onChangeText={text => this.setState({ sourceStationCode: text.toUpperCase() })}
+                            onChangeText={text => this.setState({ sourceStationCode: text })}
                             selectionColor="#0E6BA8"
                             underlineColor="#0E6BA8"
                         />
                         <TextInput
                             label='Destination Station Code'
                             value={this.state.destinationStationCode}
-                            onChangeText={text => this.setState({ destinationStationCode: text.toUpperCase() })}
+                            onChangeText={text => this.setState({ destinationStationCode: text })}
                             selectionColor="#0E6BA8"
                             underlineColor="#0E6BA8"
                             style={{ marginTop: 10 }}
@@ -187,6 +174,16 @@ class TrainBetweenStations extends Component {
                             )
                     }
                 </Content>
+                {
+                        this.state.showActivity ? (
+                            <View style={[styles.container, styles.horizontal]}>
+                                <ActivityIndicator size="large" color="#0E6BA8" style={{marginBottom: 30,}}/>
+                            </View>
+                        ) :
+                            (
+                                <View></View>
+                            )
+                    }
             </Container>
         );
     }

@@ -4,7 +4,7 @@ import { View, Text, ActivityIndicator, Dimensions, Alert, StyleSheet, RefreshCo
 import { TextInput, Title, Button, DataTable } from 'react-native-paper'
 import { Container, Content, DatePicker } from 'native-base';
 import { Ionicons } from '@expo/vector-icons/'
-import Helper, { apiKey } from '../helper/Helper';
+import Helper, { apiKey, baseUrl, liveStatusUrl } from '../helper/Helper';
 
 // create a component
 class LiveStatus extends Component {
@@ -14,7 +14,7 @@ class LiveStatus extends Component {
             trainNumber: null,
             chosenDate: new Date(),
             dateToSend: new Date(),
-            getLiveStatusUrl: 'livetrainstatus/apikey/',
+            getLiveStatusUrl: liveStatusUrl,
             liveStatusResponse: {},
             liveStatusResponseFetched: false,
             showActivity: false,
@@ -120,7 +120,7 @@ class LiveStatus extends Component {
             res.then((
                 res => {
                     this.toggleActivity();
-                    if (res.ResponseCode === '200') {
+                    if (res.ResponseCode === '200' && res.CurrentStation!==null) {
                         this.setState({
                             liveStatusResponse: res,
                             liveStatusResponseFetched: true
@@ -143,6 +143,7 @@ class LiveStatus extends Component {
     componentWillMount() {
         this.setChosenDate();
     }
+    
     render() {
         return (
             <Container>
@@ -155,16 +156,6 @@ class LiveStatus extends Component {
                       }
                 >
                     
-                    {
-                        this.state.showActivity ? (
-                            <View style={[styles.container, styles.horizontal]}>
-                                <ActivityIndicator size="large" color="#0E6BA8" />
-                            </View>
-                        ) :
-                            (
-                                <View />
-                            )
-                    }
                     <View style={{ paddingLeft: 10 }}>
                         <Title>
                             Please enter Your details:
@@ -259,7 +250,18 @@ class LiveStatus extends Component {
                                 <View></View>
                             )
                     }
+                    
                 </Content>
+                {
+                        this.state.showActivity ? (
+                            <View style={[styles.container, styles.horizontal]}>
+                                <ActivityIndicator size="large" color="#0E6BA8" style={{marginBottom: 30,}}/>
+                            </View>
+                        ) :
+                            (
+                                <View></View>
+                            )
+                    }
             </Container>
         );
     }
@@ -268,19 +270,16 @@ class LiveStatus extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        position:'absolute',
         justifyContent: 'center',
         alignItems: 'center',
-        position:'absolute',
         alignSelf: 'center',
         height:Dimensions.get('window').height,
         zIndex:1000,
         width:Dimensions.get('window').width,
-        backgroundColor:'rgba(0,0,0,0.4)'
+        backgroundColor:'rgba(0,0,0,0.5)'
     },
     horizontal: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        padding: 10
     }
 })
 

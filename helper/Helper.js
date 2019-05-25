@@ -1,9 +1,12 @@
 import 'whatwg-fetch';
-const baseUrl='http://indianrailapi.com/api/v2/';
-export const apiKey = 'f346b4bb633aa1115a1677d918c39004'
+
+export const baseUrl='http://indianrailapi.com/api/v2/';
+export const apiKey = 'f346b4bb633aa1115a1677d918c39004';
+export const liveStatusUrl = 'livetrainstatus/apikey/';
+export const pnrStatusUrl = 'PNRCheck/apikey/';
+
 const Helper=(url,method,body)=>{
     if(body!==undefined){
-        console.log(baseUrl+url)
         return(
             fetch(baseUrl+url,{
                 method:method,
@@ -21,7 +24,6 @@ const Helper=(url,method,body)=>{
         );
     }
     else{
-        console.log(baseUrl+url)
         return(
             fetch(baseUrl+url,{
                 method:method,

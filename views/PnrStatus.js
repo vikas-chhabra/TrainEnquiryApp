@@ -4,7 +4,7 @@ import { View, Text, ActivityIndicator, Dimensions, Alert, StyleSheet, RefreshCo
 import { TextInput, Title, Button, DataTable } from 'react-native-paper'
 import { Container, Content, DatePicker } from 'native-base';
 import { Ionicons } from '@expo/vector-icons/'
-import Helper, { apiKey } from '../helper/Helper';
+import Helper, { apiKey, pnrStatusUrl } from '../helper/Helper';
 
 // create a component
 class PnrStatus extends Component {
@@ -12,7 +12,7 @@ class PnrStatus extends Component {
         super(props);
         this.state = {
             pnrNumber: null,
-            getPnrStatusUrl: 'PNRCheck/apikey/',
+            getPnrStatusUrl: pnrStatusUrl,
             pnrStatusResponse: {},
             pnrStatusResponseFetched: false,
             showActivity: false,
@@ -55,7 +55,7 @@ class PnrStatus extends Component {
 
                     }
                     else {
-                        Alert.alert(res.STATUS)
+                        Alert.alert(res.Status)
 
                     }
                 }
@@ -78,17 +78,6 @@ class PnrStatus extends Component {
                         />
                     }
                 >
-
-                    {
-                        this.state.showActivity ? (
-                            <View style={[styles.container, styles.horizontal]}>
-                                <ActivityIndicator size="large" color="#0E6BA8" />
-                            </View>
-                        ) :
-                            (
-                                <View />
-                            )
-                    }
                     <View style={{ paddingLeft: 10 }}>
                         <Title>
                             Please enter PNR Number to search:
@@ -163,6 +152,16 @@ class PnrStatus extends Component {
                             )
                     }
                 </Content>
+                {
+                        this.state.showActivity ? (
+                            <View style={[styles.container, styles.horizontal]}>
+                                <ActivityIndicator size="large" color="#0E6BA8" style={{marginBottom: 30,}}/>
+                            </View>
+                        ) :
+                            (
+                                <View></View>
+                            )
+                    }
             </Container>
         );
     }
